@@ -53,9 +53,6 @@ class HelloConfigTest {
     @DisplayName("Thread not Safe")
     public void multiThread() throws Exception{
         //given
-
-
-
         //when
         Runnable user1 = memberService::click;
         Runnable user2 = memberService::click;

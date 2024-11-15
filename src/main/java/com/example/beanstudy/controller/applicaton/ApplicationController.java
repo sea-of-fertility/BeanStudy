@@ -33,6 +33,4 @@ public class ApplicationController {
     public String check(HttpServletRequest request) {
         return (String) request.getServletContext().getAttribute(key);
     }
-
-
 }

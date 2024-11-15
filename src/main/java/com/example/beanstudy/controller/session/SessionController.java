@@ -23,6 +23,4 @@ public class SessionController {
         test = "change";
         return "Session scope";
     }
-
-
 }
