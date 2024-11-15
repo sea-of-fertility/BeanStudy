@@ -39,7 +39,7 @@ Spring에서의 `Singleton Bean`과 GoF 싱글톤 패턴은 개념적으로 다�
 
 #### 예제 코드
 
-[코드로 바로 이동](/Users/hyungjunpark/IdeaProjects/BeanStudy/src/main/java/com/example/beanstudy/controller/request/RequestController.java)
+[코드로 바로 이동](https://github.com/sea-of-fertility/BeanStudy/blob/3afe8e05b3f420f8587d1cdf2eb232aac1ee2f3b/src/main/java/com/example/beanstudy/controller/request/RequestController.java)
 ```java
 @RestController
 @RequestMapping("/request")
@@ -73,7 +73,7 @@ public class RequestController {
 + 나의 HTTP 세션 동안에는 Bean의 내부 상태를 자유롭게 변경할 수 있습니다. 이렇게 변경한 상태는 해당 세션에만 적용되며, 다른 HTTP 세션에서 동일한 Bean 정의를 통해 생성된 인스턴스에는 영향을 미치지 않습니다. 즉, 각 HTTP 세션마다 독립적인 상태를 유지하게 됩니다.
 + 세션이 만료되거나 폐기되면 해당 세션에 종속된 인스턴스도 함께 폐기됩니다.
 
-[코드로 바로 이동](/Users/hyungjunpark/IdeaProjects/BeanStudy/src/main/java/com/example/beanstudy/controller/session/SessionController.java)
+[코드로 바로 이동](https://github.com/sea-of-fertility/BeanStudy/blob/abb76aa02aa6134f052b5b1a2183df502e46da56/src/main/java/com/example/beanstudy/controller/session/SessionController.java)
 ```java
 @RestController
 @RequestMapping("/session")
@@ -101,7 +101,7 @@ public class SessionController {
 + ServletContext당 싱글톤으로 생성한다.
 
 
-[코드로 바로 이동](/Users/hyungjunpark/IdeaProjects/BeanStudy/src/main/java/com/example/beanstudy/controller/applicaton/ApplicationController.java)
+[코드로 바로 이동](https://github.com/sea-of-fertility/BeanStudy/blob/abb76aa02aa6134f052b5b1a2183df502e46da56/src/main/java/com/example/beanstudy/controller/applicaton/ApplicationController.java)
 ```java
 @RestController
 @RequestMapping("/application")
