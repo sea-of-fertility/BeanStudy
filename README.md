@@ -1,3 +1,94 @@
+# 학습 정리
+
+## 스프링 컨테이너
+> 스프링 컨테이너를 부를 때 `BeanFactory` `ApplicationContext`로 구분해서 이야기 한다. 일반적으로 `ApplicationContext`를 스프링 컨테이너라 한다.
+
+### 스프링 컨테이너 생성
+아래코드는 HelloConfig.class를 구성정보로 지정했다.
+> ex) ApplicationContext applicationContext = new AnnotationConfigApplicationContext(HelloConfig.class)
+
+### 스프링 빈 등록, 의존 관계 설정
+@Configuration이 붙은 클래스를 Bean으로 등록하고 해당 클래스를 파싱하고 Bean이 붙어 있는 메소드를 찾아서 생성한다. @Configuration이 안 붙은 클래스에서 @Bean을 이용할 경우 singleton을 보장하지 않는다.
+
+``` java
+@Configuration
+public class HelloConfig {
+
+    @Bean
+    public MemberRepository memberRepository() {
+        return new MemberRepositoryImp();
+    }
+
+    @Bean
+    public MemberService memberService() {
+        return new MemberServiceImp(memberRepository());
+    }
+```
+
+
+
+### 스프링 빈 이름 조회
+``` java 
+    @Test
+    @DisplayName("모든 빈 확인하기")
+    public void allBeanCheck() throws Exception{
+        
+        //given
+        AnnotationConfigApplicationContext config = new AnnotationConfigApplicationContext(HelloConfig.class);
+
+        //when
+        String[] beanDefinitionNames = config.getBeanDefinitionNames();
+
+        //then
+        Arrays.stream(beanDefinitionNames).forEach(System.out::println);
+    }
+```
+
+### singleton test
+``` java
+   @Test
+    @DisplayName("싱글톤 작동방식 확인")
+    public void springContainer() throws Exception{
+
+        //given
+        AnnotationConfigApplicationContext config = new AnnotationConfigApplicationContext(HelloConfig.class);
+
+        //when
+        MemberService memberService1 = config.getBean("memberService", MemberService.class);
+        MemberService memberService2 = config.getBean("memberService", MemberService.class);
+
+        //then
+        Assertions.assertThat(memberService1).isSameAs(memberService2);
+    }
+```
+
+
+#### 빈 생성 주의 사항
+> 빈 이름은 항상 다른 이름을 부여해야 한다. 만약 같은 이름을 부여할 경우 다른 빈이 무시되거나 기존 빈을 덮어버리거나 설정에 따라 오류가 발생할 수 있다.
+
+
+
+### @Autowired
+required = false로 설정할 경우 주입할 Bean이 없어도 오류가 발생하지 않는다.
+
+
+### lite-Mode
+Spring에서 lite mode는 @Configuration이 아닌 단순한 @Component로 사용될 수 있는 설정 클래스를 지원하는 기능입니다. Spring은 이러한 lite mode 설정 클래스에서 @Bean 메서드를 발견해도 이를 프록시 처리하거나 클래스 전역적으로 관리하지 않고, 대신 lite하게 처리하여 각 @Bean 메서드를 독립적인 방식으로 실행하고 관리합니다.
+
+이를 통해 개발자는 lite mode에서 필요에 따라 간단하게 Bean을 정의하고 사용할 수 있으며, 특히 서로 독립적인 컴포넌트 설정이 필요할 때 활용할 수 있습니다. 다만, 이 경우 Bean들 간에 의존성이 있는 복잡한 구성보다는 개별 Bean을 독립적으로 정의할 때 더 적합합니다.
+
+### CGLIB(Code Generator Library)
+> 코드 생성 라이브러리로서 런타임에 동적으로 자바 클래스의 프록시를 생성해주는 기능을 제공한다. 인터페이스가 아닌 클래스에 대해서 동적 프록시를 생성할 수 있다.
+
+
+### proxyBeanMethods=false 을 사용하는 이유 추론
+1. @Configuration 클래스에 cglib 런타임 코드 생성 기술을 적용해서 프록시 방식으로 감싸서 동작하기 때문에 생성 비용이 더 크다.
+   하지만 실제로는 큰 차이가 없다.
+2. @Bean 메소드가 여러번 호출할 때 매번 동일 오브젝트가 실행되는 것이 자바 코드를 봤을 때 기대하는 방식과 다르다.
+
+
+
+
 ## Bean Scope 학습 
 ### singleton Scope
 + 싱글톤 빈의 공유 인스턴스는 하나만이 관리됩니다. 특정 Bean을 요청할 경우 Spring container에서 `하나의 특정 인스턴스`로 반환합니다.
