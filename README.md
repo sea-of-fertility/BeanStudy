@@ -76,6 +76,8 @@ required = false로 설정할 경우 주입할 Bean이 없어도 오류가 발�
 Spring에서 lite mode는 @Configuration이 아닌 단순한 @Component로 사용될 수 있는 설정 클래스를 지원하는 기능입니다. Spring은 이러한 lite mode 설정 클래스에서 @Bean 메서드를 발견해도 이를 프록시 처리하거나 클래스 전역적으로 관리하지 않고, 대신 lite하게 처리하여 각 @Bean 메서드를 독립적인 방식으로 실행하고 관리합니다.
 
 이를 통해 개발자는 lite mode에서 필요에 따라 간단하게 Bean을 정의하고 사용할 수 있으며, 특히 서로 독립적인 컴포넌트 설정이 필요할 때 활용할 수 있습니다. 다만, 이 경우 Bean들 간에 의존성이 있는 복잡한 구성보다는 개별 Bean을 독립적으로 정의할 때 더 적합합니다.
+> proxyBeanMethods=false, or @Configuration 대신해서 @Component 사용
+
 
 ### CGLIB(Code Generator Library)
 > 코드 생성 라이브러리로서 런타임에 동적으로 자바 클래스의 프록시를 생성해주는 기능을 제공한다. 인터페이스가 아닌 클래스에 대해서 동적 프록시를 생성할 수 있다.
