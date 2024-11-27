@@ -1,4 +1,19 @@
-# 학습 정리
+# Bean 생성 주기
+
+## 목차
+1. [스프링 컨테이너](##스프링-컨테이너)
+   - [스프링 컨테이너 생성](###스프링-컨테이너-생성)
+   - [스프링 빈 등록, 의존 관계 설정](###스프링-빈-등록,-의존 관계-설정)
+   - [스프링 빈 이름 조회](###스프링-빈-이름-조회)
+   - [singleton test](##singleton-test)
+2. [Bean Scope 학습 ](##Bean-Scope-학습)
+   - [singleton Scope](###singleton-Scope)
+   - [prototype Scope](###prototype-Scope)
+   - [request Scope](###request-Scope)
+   - [session Scope](###session-Scope)
+   - [application Scope](###application-Scope)
+   - [webSocket Scope](###webSocket-Scope)
+
 
 ## 스프링 컨테이너
 > 스프링 컨테이너를 부를 때 `BeanFactory` `ApplicationContext`로 구분해서 이야기 한다. 일반적으로 `ApplicationContext`를 스프링 컨테이너라 한다.
@@ -24,8 +39,6 @@ public class HelloConfig {
         return new MemberServiceImp(memberRepository());
     }
 ```
-
-
 
 ### 스프링 빈 이름 조회
 ``` java 
@@ -67,7 +80,6 @@ public class HelloConfig {
 > 빈 이름은 항상 다른 이름을 부여해야 한다. 만약 같은 이름을 부여할 경우 다른 빈이 무시되거나 기존 빈을 덮어버리거나 설정에 따라 오류가 발생할 수 있다.
 
 
-
 ### @Autowired
 required = false로 설정할 경우 주입할 Bean이 없어도 오류가 발생하지 않는다.
 
@@ -78,16 +90,14 @@ Spring에서 lite mode는 @Configuration이 아닌 단순한 @Component로 사�
 이를 통해 개발자는 lite mode에서 필요에 따라 간단하게 Bean을 정의하고 사용할 수 있으며, 특히 서로 독립적인 컴포넌트 설정이 필요할 때 활용할 수 있습니다. 다만, 이 경우 Bean들 간에 의존성이 있는 복잡한 구성보다는 개별 Bean을 독립적으로 정의할 때 더 적합합니다.
 > proxyBeanMethods=false, or @Configuration 대신해서 @Component 사용
 
-
-### CGLIB(Code Generator Library)
-> 코드 생성 라이브러리로서 런타임에 동적으로 자바 클래스의 프록시를 생성해주는 기능을 제공한다. 인터페이스가 아닌 클래스에 대해서 동적 프록시를 생성할 수 있다.
-
-
 ### proxyBeanMethods=false 을 사용하는 이유 추론
 1. @Configuration 클래스에 cglib 런타임 코드 생성 기술을 적용해서 프록시 방식으로 감싸서 동작하기 때문에 생성 비용이 더 크다.
    하지만 실제로는 큰 차이가 없다.
 2. @Bean 메소드가 여러번 호출할 때 매번 동일 오브젝트가 실행되는 것이 자바 코드를 봤을 때 기대하는 방식과 다르다.
 
+
+### CGLIB(Code Generator Library)
+> 코드 생성 라이브러리로서 런타임에 동적으로 자바 클래스의 프록시를 생성해주는 기능을 제공한다. 인터페이스가 아닌 클래스에 대해서 동적 프록시를 생성할 수 있다.
 
 
 
@@ -231,5 +241,5 @@ public class ApplicationController {
 ### webSocket
 WebSocket 범위는 WebSocket 세션의 수명 주기와 연결되어 있으며 WebSocket 애플리케이션을 통한 STOMP에 적용됩니다
 
-### 출처
+### 이미지 및 학습 출처
 [spring-docs/scope](https://docs.spring.io/spring-framework/reference/core/beans/factory-scopes.html)
