@@ -12,7 +12,7 @@
    - [request Scope](#request-Scope)
    - [session Scope](#session-Scope)
    - [application Scope](#application-Scope)
-   - [webSocket](#webSocket)
+   - [webSocket Scope](#webSocket-Scope)
 
 
 ## 스프링 컨테이너
@@ -238,7 +238,7 @@ public class ApplicationController {
 + servletContext의 Attribute값을 설정하고 이 값을 공유하는지 확인하는 코드입니다.
 
 
-### webSocket
+### webSocket Scope
 WebSocket 범위는 WebSocket 세션의 수명 주기와 연결되어 있으며 WebSocket 애플리케이션을 통한 STOMP에 적용됩니다
 
 ### 이미지 및 학습 출처
